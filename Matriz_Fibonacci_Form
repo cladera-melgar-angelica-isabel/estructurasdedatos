@@ -1,0 +1,122 @@
+//MATRIZ.h
+#pragma once
+#include <iostream>
+
+
+const int NM=10;
+const int NN=15;
+class MATRIZ
+{
+  int matriz2[NN][NM];
+  int fila,columna;
+public:
+	//contructor
+	MATRIZ(void);
+	// metodos de acceso
+
+	void Set_matriz2(int f, int c,int valor);//NUEVO FI
+	int Get_matriz2(int f,int c);
+
+	int Get_fila();
+	int Get_columna();
+  
+	void Set_fila(int f);
+	void Set_columna(int c);
+  
+	// operaciones
+	int numerofi(int n1,int n2);
+  
+}; 
+
+//MATRIZ.cpp
+#include "StdAfx.h"
+#include "MATRIZ.h"
+
+//contructor
+MATRIZ::MATRIZ(void)
+{
+  fila=NN;
+  columna=NM;
+  for(int i=0; i<NN; i++)
+   {for(int j=0; j<NM; j++)
+	  {matriz2[i][j]=0;
+    }
+   }
+}
+//metodos de acceso
+int MATRIZ::Get_fila()
+	{return fila;}
+	int MATRIZ::Get_columna()
+	{return columna;}
+	void MATRIZ::Set_fila(int f)
+	{ fila=f;}
+	void MATRIZ::Set_columna(int c)
+	{columna=c;}
+  void MATRIZ::Set_matriz2(int f, int c,int valor)
+	{matriz2[f][c]=valor;
+	}
+	int MATRIZ::Get_matriz2(int f,int c)
+	{return matriz2[f][c];
+	}
+  //operacion
+  int MATRIZ::numerofi(int n1,int n2)
+	{int aux1=0,aux2=1,aux3=1;
+	if(n2>=n1)
+	{
+		if(n1==0||n1==1)
+		{return 1;}
+		else
+		{for(int i=0;i<n1;i++)
+		{
+			aux3=aux1+aux2;
+			aux1=aux2;
+			aux2=aux3;
+		}
+		return aux3;
+		}
+	}
+	else
+	{return 0;}
+	}
+  
+  //OPERACIONES.h
+#pragma once
+#include "MATRIZ.h"
+
+using namespace System::Windows::Forms;
+
+class OPERACIONES:public MATRIZ
+{
+public:
+	OPERACIONES(void);
+	
+	void Rellenarfi(DataGridView^  grilla);
+
+};
+
+//OPERACIONES.cpp
+#include "StdAfx.h"
+#include "OPERACIONES.h"
+
+OPERACIONES::OPERACIONES(void)
+{MATRIZ();
+}
+void OPERACIONES::Rellenarfi(DataGridView^  grilla)
+{int f=Get_fila();int c=Get_columna();
+	int aux,aux1=0,limiten=f*c;
+	for(int i=0;i<Get_fila();i++)
+	{for(int j=0;j<Get_columna();j++)
+	{Set_matriz2(i,j,numerofi(aux1,limiten));
+	 grilla->Rows[i]->Cells[j]->Value=System::Convert::ToString(Get_matriz2(i,j));
+	 aux1++;
+	}
+	}
+}
+
+  
+
+
+
+
+
+
